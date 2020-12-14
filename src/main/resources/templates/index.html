@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Cartorios API</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+    <link rel="stylesheet" href="/css/index.css">
+</head>
+<body>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js" integrity="sha384-q2kxQ16AaE6UbzuKqyBE9/u/KzioAlnx2maXQHiDX9d4/zp8Ok3f+M7DPm+Ib6IU" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.min.js" integrity="sha384-pQQkAEnwaBkjpqZ8RU1fF1AKtTcHJwFl3pblpTlHXybJjHpMYo79HY3hIi4NKxyj" crossorigin="anonymous"></script>
+
+
+<div class="" id="content">
+    <div class="">
+        <form id="form" class="form-cool">
+            <div class="card">
+                <div class="card-header">
+                    <ul class="nav nav-tabs card-header-tabs" id="form-tabs" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link active"  href="#empty-tab" role="tab" aria-controls="mpty-tab" aria-selected="false">
+                                Selecionar
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#filtrar" role="tab" aria-controls="filtrar" aria-selected="true">
+                                Filtrar
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="card-body">
+                    <h4 class="card-title text-center">
+                        Cartorios API
+                    </h4>
+                    <h6 class="card-subtitle mb-2">
+<!--                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor-->
+                    </h6>
+                    <div class="tab-content mt-3">
+                        <div class="tab-pane active text-center text" id="empty-tab" role="tabpanel">
+                            Seleciona uma das abas acima para começar
+                        </div>
+                        <div class="tab-pane" id="filtrar" role="tabpanel">
+                            <p class="card-text">
+                            <div class="card" style="margin-top: 5px; margin-bottom: 5px">
+                                <h5 class="card-header text-center">
+                                    Filtrar Dados da Tabela
+                                </h5>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="form-group col-6 col-sm-6">
+                                            <label for="input-ID">ID</label>
+                                            <input type="number" class="form-control" id="input-ID" name="id">
+                                        </div>
+                                        <div class="form-group col-6 col-sm-6">
+                                            <label for="input-UF">UF</label>
+                                            <input type="text" class="form-control" id="input-UF" name="uf">
+                                        </div>
+                                        <div class="form-group col">
+                                            <label for="input-CNPJ">CNPJ</label>
+                                            <input type="text" class="form-control" id="input-CNPJ" name="cnpj">
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="form-group col-12 col-sm-12">
+                                            <label for="input-NomeOficial">Nome Oficial</label>
+                                            <input type="text" class="form-control" id="input-NomeOficial" name="nomeOficial">
+                                        </div>
+                                        <div class="form-group col-12 col-sm-12">
+                                            <label for="input-NomeFantasia">Nome Fantasia</label>
+                                            <input type="text" class="form-control" id="input-NomeFantasia" name="nomeFantasia">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="input-Endereco">Endereco</label>
+                                        <input type="text" class="form-control" id="input-Endereco" name="endereco">
+                                    </div>
+                                    <div class="row">
+                                        <div class="form-group col-12 col-sm-6">
+                                            <label for="input-Bairro">Bairro</label>
+                                            <input type="text" class="form-control" id="input-Bairro" name="bairro">
+                                        </div>
+                                        <div class="form-group col-12 col-sm-6">
+                                            <label for="input-Municipio">Municipio</label>
+                                            <input type="text" class="form-control" id="input-Municipio" name="municipio">
+                                        </div>
+                                        <div class="form-group col">
+                                            <label for="input-CEP">CEP</label>
+                                            <input type="text" class="form-control" id="input-CEP" name="cep">
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="form-group col-12 col-sm-12">
+                                            <label for="input-NomeDoTitular">Nome do Titular</label>
+                                            <input type="text" class="form-control" id="input-NomeDoTitular"
+                                                   name="nomeDoTitular">
+                                        </div>
+                                        <div class="form-group col-12 col-sm-12">
+                                            <label for="input-NomeDoSubstituto">Nome do Substituto</label>
+                                            <input type="text" class="form-control" id="input-NomeDoSubstituto"
+                                                   name="nomeDoSubstituto">
+                                        </div>
+                                        <div class="form-group col-12 col-sm-12">
+                                            <label for="input-NomeDoJuiz">Nome do Juiz</label>
+                                            <input type="text" class="form-control" id="input-NomeDoJuiz" name="nomeDoJuiz">
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="form-group col-12 col-sm-6">
+                                            <label for="input-Homepage">Homepage</label>
+                                            <input type="text" class="form-control" id="input-Homepage" name="homepage">
+                                        </div>
+                                        <div class="form-group col-12 col-sm-6">
+                                            <label for="input-Email">Email</label>
+                                            <input type="text" class="form-control" id="input-Email" name="email">
+                                        </div>
+                                        <div class="form-group col-12 col-sm-6">
+                                            <label for="input-Telefone">Telefone</label>
+                                            <input type="text" class="form-control" id="input-Telefone" name="telefone">
+                                        </div>
+                                        <div class="form-group col-12 col-sm-6">
+                                            <label for="input-FAX">FAX</label>
+                                            <input type="text" class="form-control" id="input-FAX" name="fax">
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="form-group col-12 col-sm-6">
+                                            <label for="input-HorarioDeAtendimento">Horario de Atendimento</label>
+                                            <input type="text" class="form-control" id="input-HorarioDeAtendimento"
+                                                   name="horarioDeAtendimento">
+                                        </div>
+                                        <div class="form-group col-12 col-sm-6">
+                                            <label for="input-AreaDeAbrangencia">Area de Abrangencia</label>
+                                            <input type="text" class="form-control" id="input-AreaDeAbrangencia"
+                                                   name="areaDeAbrangencia">
+                                        </div>
+                                        <div class="form-group col">
+                                            <label for="input-Atribuicoes">Atribuicoes</label>
+                                            <input type="text" class="form-control" id="input-Atribuicoes" name="atribuicoes">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="d-grid gap-2" style="margin: 10px 0" >
+                        <button type="button" class="btn btn-secondary" onClick="document.getElementById('form').scrollIntoView();">Ir para o Topo</button>
+                        <button type="button" class="btn btn-info" onclick="window.location.href = '/signin';">Acessar API</button>
+                        <button type="button" class="btn btn-primary" onclick="pageInput.val(0);find();">Fazer Busca</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<div class="tabela-cartorios-div">
+    <table class="table table-dark table-striped table-hover table-sm table-bordered" id="cartorios-table">
+        <thead>
+            <tr id="table-head-columns">
+                <th scope="col">ID</th>
+                <th scope="col">UF</th>
+                <th scope="col">CNPJ</th>
+                <th scope="col">Nome Oficial</th>
+                <th scope="col">Nome Fantasia</th>
+                <th scope="col">Endereço</th>
+            </tr>
+        </thead>
+        <tbody id="cartorios-table-body">
+        </tbody>
+    </table>
+    <div class="d-flex justify-content-between">
+        <div class="">
+            <label for="page-number">Página:</label>
+            <input type="number" name="pagina" id="page-number" />
+        </div>
+        <nav class="">
+            <ul class="pagination">
+                <li class="page-item disabled">
+                    <button class="page-link" tabindex="-1" aria-disabled="true" onclick="voltarPagina()" id="btn-anterior">Anterior</button>
+                </li>
+                <li class="page-item">
+                    <button class="page-link" onclick="avancarPagina()" id="btn-proximo">Próxima</button>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</div>
+<!-- Modal -->
+<div class="modal fade" id="cartorioModal" tabindex="-1" aria-labelledby="cartorioModal" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="cartorioModalTitle">Título do Modal</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" id="cartorioModalBody">...</div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="application/javascript" th:inline="javascript">
+    let columns = ['ID', 'UF', 'CNPJ', 'NomeOficial', 'NomeFantasia', 'Endereco', 'Bairro', 'Municipio', 'CEP', 'NomeDoTitular', 'NomeDoSubstituto', 'NomeDoJuiz', 'Homepage', 'Email', 'Telefone', 'FAX', 'HorarioDeAtendimento', 'AreaDeAbrangencia', 'Atribuicoes'];
+    let pageInput = $("#page-number");
+    const rowsPage = [[${pageRows}]];
+    async function queryData(url, jsonBody) {
+        fetch(url, {
+            method: 'POST',
+            body: JSON.stringify(jsonBody),
+            headers: {
+                'content-type': 'application/json',
+                'X-XSRF-TOKEN': /*[[${_csrf.token}]]*/ 'missing-csrf-token'
+            }
+        })
+        .then(function(response){
+            response.json().then(function (data) {
+                // console.log(data);
+                data.forEach(cartorio => {
+                    let str = `<tr role="button">\n` +
+                        `    <td>${cartorio.id}</td>\n` +
+                        `    <td>${cartorio.uf ? cartorio.uf : 'Indisponível'}</td>\n` +
+                        `    <td>${cartorio.cnpj ? cartorio.cnpj : 'Indisponível'}</td>\n` +
+                        `    <td>${cartorio.nomeOficial ? cartorio.nomeOficial : 'Indisponível'}</td>\n` +
+                        `    <td>${cartorio.nomeFantasia ? cartorio.nomeFantasia : 'Indisponível'}</td>\n` +
+                        `    <td>${cartorio.endereco ? cartorio.endereco : 'Indisponível'}</td>\n` +
+                        `</tr>`
+                    $("#cartorios-table-body").append(str);
+                    $("#cartorios-table-body tr:last-child").on('click', function () {
+                        $("#cartorioModalTitle").text("Cartório ID: " + cartorio.id);
+                        let modalStr = `<pre style="color: black;">ID: ${cartorio.id}\n` +
+                            `UF: ${cartorio.uf ? cartorio.uf : 'Indisponível'}\n` +
+                            `CNPJ: ${cartorio.cnpj ? cartorio.cnpj : 'Indisponível'}\n` +
+                            `Nome Oficial: ${cartorio.nomeOficial ? cartorio.nomeOficial : 'Indisponível'}\n` +
+                            `Nome Fantasia: ${cartorio.nomeFantasia ? cartorio.nomeFantasia : 'Indisponível'}\n` +
+                            `Endereço:<span data-bs-toggle="tooltip" data-bs-placement="top" title="Pode não funcionar corretamente">`+
+                            `<svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-geo-alt-fill" fill="green" xmlns="http://www.w3.org/2000/svg">`+
+                            `<path fill-rule="evenodd" d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10zm0-7a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>`+
+                            `</svg>`+
+                            `<a href="https://www.google.com/maps/search/?api=1&query=${cartorio.endereco} - ${cartorio.bairro}, ${cartorio.municipio} - ${cartorio.uf}, ${cartorio.cep}" target="_blank"> ${cartorio.endereco}</a>`+
+                            `</span>\n` +
+                            `Bairro: ${cartorio.bairro ? cartorio.bairro : 'Indisponível'}\n` +
+                            `Municipio: ${cartorio.municipio ? cartorio.municipio : 'Indisponível'}\n` +
+                            `CEP: ${cartorio.cep ? cartorio.cep : 'Indisponível'}\n` +
+                            `Nome do Titular: ${cartorio.nomeDoTitular ? cartorio.nomeDoTitular : 'Indisponível'}\n` +
+                            `Nome do Substituto: ${cartorio.nomeDoSubstituto ? cartorio.nomeDoSubstituto : 'Indisponível'}\n` +
+                            `Nome do Juiz: ${cartorio.nomeDoJuiz ? cartorio.nomeDoJuiz : 'Indisponível'}\n` +
+                            `Homepage: ${cartorio.homepage ? cartorio.homepage : 'Indisponível'}\n` +
+                            `Email: ${cartorio.email ? cartorio.email : 'Indisponível'}\n` +
+                            `Telefone: ${cartorio.telefone ? cartorio.telefone : 'Indisponível'}\n` +
+                            `FAX: ${cartorio.fax ? cartorio.fax : 'Indisponível'}\n` +
+                            `Horário de Atendimento: ${cartorio.horarioDeAtendimento ? cartorio.horarioDeAtendimento : 'Indisponível'}\n` +
+                            `Atribuições: ${cartorio.atribuicoes ? cartorio.atribuicoes : 'Indisponível'}</pre>\n`;
+                        $("#cartorioModalBody").html(modalStr);
+                        $('#cartorioModal').modal('show');
+                    });
+                });
+            }).then(function () {
+                verificarBotoesPaginacao();
+            });
+        })
+        .catch(function(err){
+            alert(err)
+            console.error('Failed retrieving information', err);
+        });
+    }
+    async function find() {
+        pageInput.val() ? pageInput.val() : pageInput.val(0);
+        $("#cartorios-table-body")[0].innerHTML = "";
+        let apiUrl = '/api/cartorios/?page=' + pageInput.val();
+        let jsonBody = {};
+        $('form').serializeArray().forEach(function (obj) {
+            if (obj.value.length) {
+                jsonBody[obj.name] = obj.value;
+            }
+        })
+        await queryData(apiUrl, jsonBody);
+    }
+
+    async function voltarPagina() {
+        if (podeVoltarPagina()) {
+            pageInput.val(parseInt(pageInput.val()) - 1);
+            await find();
+        }
+    }
+
+    async function avancarPagina() {
+        if (podeAvancarPagina()) {
+            pageInput.val(parseInt(pageInput.val()) + 1);
+            await find();
+        }
+    }
+
+    async function verificarBotoesPaginacao() {
+        if (podeAvancarPagina()) {
+            $("#btn-proximo").parent().removeClass('disabled');
+        } else {
+            $("#btn-proximo").parent().addClass('disabled');
+        }
+
+        if (podeVoltarPagina()) {
+            $("#btn-anterior").parent().removeClass('disabled');
+        } else {
+            $("#btn-anterior").parent().addClass('disabled');
+        }
+    }
+
+    function podeVoltarPagina() {
+        return !(pageInput.val() == null || parseInt(pageInput.val()) === 0);
+    }
+
+    function podeAvancarPagina() {
+        return $("#cartorios-table-body tr").length === rowsPage;
+    }
+</script>
+<script>
+    $('#form-tabs a').on('click', function (e) {
+        e.preventDefault()
+        $(this).tab('show')
+    })
+</script>
+</body>
+</html>
