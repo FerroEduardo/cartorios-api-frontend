@@ -3,6 +3,7 @@ package com.ferroeduardo.cartorios_api_frontend.config;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 
 @Configuration
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
@@ -18,6 +19,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             .cors()
                 .disable()
             .csrf()
-                .disable();
+                .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
+                .and()
+            .httpBasic();
     }
 }
