@@ -28,7 +28,7 @@ public class AccountController {
     public AccountController(UserService userService, PasswordEncoder passwordEncoder) {
         this.userService = userService;
         this.passwordEncoder = passwordEncoder;
-        logger = LoggerFactory.getLogger(AccountController.class);
+        this.logger = LoggerFactory.getLogger(AccountController.class);
     }
 
     @GetMapping("/signin")
