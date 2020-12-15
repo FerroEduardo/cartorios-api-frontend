@@ -204,7 +204,7 @@
 <script type="application/javascript" th:inline="javascript">
     let columns = ['ID', 'UF', 'CNPJ', 'NomeOficial', 'NomeFantasia', 'Endereco', 'Bairro', 'Municipio', 'CEP', 'NomeDoTitular', 'NomeDoSubstituto', 'NomeDoJuiz', 'Homepage', 'Email', 'Telefone', 'FAX', 'HorarioDeAtendimento', 'AreaDeAbrangencia', 'Atribuicoes'];
     let pageInput = $("#page-number");
-    const rowsPage = [[${cartoriosTableRows}]];
+    const cartoriosTableRows = [[${cartoriosTableRows}]];
     async function queryData(url, jsonBody) {
         fetch(url, {
             method: 'POST',
@@ -311,7 +311,7 @@
     }
 
     function podeAvancarPagina() {
-        return $("#cartorios-table-body tr").length === rowsPage;
+        return $("#cartorios-table-body tr").length === cartoriosTableRows;
     }
 </script>
 <script>
