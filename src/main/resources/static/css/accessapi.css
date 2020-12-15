@@ -1,0 +1,20 @@
+body {
+    background-color: #212121;
+    color: #ececec;
+}
+
+.bottom-content {
+    margin: 0 50px;
+}
+
+.bottom-content .alert {
+    max-width: 500px;
+}
+
+.bottom-content .alert p {
+    margin-bottom: 0;
+}
+
+.bottom-content form {
+    max-width: 800px;
+}
