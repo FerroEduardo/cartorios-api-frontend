@@ -14,6 +14,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -44,6 +45,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .failureHandler(loginFailureHandler())
                 .usernameParameter("inputUsername").passwordParameter("inputPassword")
                 .defaultSuccessUrl("/api/access")
+                .permitAll()
+                .and()
+            .logout()
+                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+                .logoutSuccessUrl("/signin?logout")
                 .permitAll()
                 .and()
             .cors()
