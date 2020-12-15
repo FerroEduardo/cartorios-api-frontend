@@ -40,8 +40,14 @@ public class ApiController {
     @GetMapping(path = "/access")
     public String apiPanelControl(Model model, Principal principal) throws JsonProcessingException {
         User user = userService.findByUsername(principal.getName());
-        model.addAttribute("apiAccessible", user.isApiAccessible());
-        model.addAttribute("apiKey", "Indisponível");
+        model.addAttribute("apiAccessible",user.isApiAccessible());
+        if (user.isApiAccessible()) {
+            String userApiKey = getUserApiKey(user.getId()).get("api_key");
+            if (userApiKey == null || userApiKey.length() == 0) {
+                userApiKey = "REQUISITAR NOVA CHAVE";
+            }
+            model.addAttribute("apiKey", userApiKey);
+        }
         return "/api/access";
     }
 
@@ -50,7 +56,7 @@ public class ApiController {
         return "/api/how";
     }
 
-    @GetMapping(path = "/token/get", produces = "application/json")
+    @GetMapping(path = "/key/get", produces = "application/json")
     private Map<String, String> getUserApiKey(Principal principal) throws JsonProcessingException {
         User user = userService.findByUsername(principal.getName());
         Long userId = user.getId();
@@ -59,7 +65,7 @@ public class ApiController {
     }
 
     private Map<String, String> getUserApiKey(Long userId) throws JsonProcessingException {
-        String requestUrl = "http://localhost:8080/api/token/get/";
+        String requestUrl = "http://localhost:8080/api/key/get/";
         Map<String, Object> requestBodyMap = new TreeMap<>();
         requestBodyMap.put("userId", userId);
         HttpHeaders headers = new HttpHeaders();
@@ -71,14 +77,14 @@ public class ApiController {
         return responseObject;
     }
 
-    @PostMapping(path = "/token/generate", produces = "application/json")
+    @PostMapping(path = "/key/generate", produces = "application/json")
     private ResponseEntity<Map<String, String>> generateNewUserApiKey(Principal principal) throws JsonProcessingException {
         User user = userService.findByUsername(principal.getName());
         if (!user.isApiAccessible()) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
         Long userId = user.getId();
-        String requestUrl = "http://localhost:8080/api/token/generate/";
+        String requestUrl = "http://localhost:8080/api/key/generate/";
         Map<String, Object> requestBodyMap = new TreeMap<>();
         requestBodyMap.put("userId", userId);
         HttpHeaders headers = new HttpHeaders();
@@ -87,18 +93,18 @@ public class ApiController {
         headers.setContentType(MediaType.APPLICATION_JSON);
         ResponseEntity<Map> responseEntity = RequestsUtil.makePostRequest(requestUrl, headers, requestBodyMap, Map.class);
         Map<String, String> responseObject = responseEntity.getBody();
-        logger.info(String.format("Usuário ID:'%d' requisitou uma nova TOKEN API", userId));
+        logger.info(String.format("Usuário ID:'%d' requisitou uma nova API KEY", userId));
         return ResponseEntity.ok().body(responseObject);
     }
 
-    @PostMapping(path = "/token/revoke", produces = "application/json")
+    @PostMapping(path = "/key/revoke", produces = "application/json")
     private ResponseEntity<?> revokeNewUserApiKey(Principal principal) throws JsonProcessingException {
         User user = userService.findByUsername(principal.getName());
         if (!user.isApiAccessible()) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
         Long userId = user.getId();
-        String requestUrl = "http://localhost:8080/api/token/revoke/";
+        String requestUrl = "http://localhost:8080/api/key/revoke/";
         Map<String, Object> requestBodyMap = new TreeMap<>();
         requestBodyMap.put("userId", userId);
         HttpHeaders headers = new HttpHeaders();
@@ -107,10 +113,10 @@ public class ApiController {
         headers.setContentType(MediaType.APPLICATION_JSON);
         ResponseEntity<Map> responseEntity = RequestsUtil.makePostRequest(requestUrl, headers, requestBodyMap, Map.class);
         if (responseEntity.getStatusCode() == HttpStatus.OK) {
-            logger.info(String.format("Usuário ID:'%d' revogou a TOKEN API com sucesso", userId));
+            logger.info(String.format("Usuário ID:'%d' revogou a API KEY com sucesso", userId));
             return ResponseEntity.ok().build();
         } else {
-            logger.warn(String.format("Ocorreu um erro quando o usuário ID:'%d' tentou revogar a TOKEN API", userId));
+            logger.warn(String.format("Ocorreu um erro quando o usuário ID:'%d' tentou revogar a API key", userId));
             return ResponseEntity.unprocessableEntity().build();
         }
     }
