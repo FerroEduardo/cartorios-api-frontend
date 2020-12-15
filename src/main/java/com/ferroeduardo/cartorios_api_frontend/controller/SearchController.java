@@ -3,6 +3,7 @@ package com.ferroeduardo.cartorios_api_frontend.controller;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ferroeduardo.cartorios_api_frontend.util.RequestsUtil;
+import com.ferroeduardo.cartorios_api_frontend.util.ServicesCommunicationUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
@@ -23,9 +24,12 @@ public class SearchController {
 
     private final Logger logger;
 
+    private ServicesCommunicationUtil servicesCommunicationUtil;
+
     public static final int cartoriosTableRows = 20;
 
-    public SearchController() {
+    public SearchController(ServicesCommunicationUtil servicesCommunicationUtil) {
+        this.servicesCommunicationUtil = servicesCommunicationUtil;
         this.logger = LoggerFactory.getLogger(SearchController.class);
     }
 
@@ -40,6 +44,8 @@ public class SearchController {
         ObjectMapper objectMapper = new ObjectMapper();
         String apiUrl = "http://localhost:8080/api/frontend/cartorios/?page="+page+"&cartoriosTableRows="+cartoriosTableRows;
         HttpHeaders headers = new HttpHeaders();
+        headers.set(servicesCommunicationUtil.usernameHeaderName, servicesCommunicationUtil.serviceUsername);
+        headers.set(servicesCommunicationUtil.passwordHeaderName, servicesCommunicationUtil.servicePassword);
         headers.setContentType(MediaType.APPLICATION_JSON);
         logger.info("Frontend requisitou a lista de cartórios");
         ResponseEntity<List> responseEntity = RequestsUtil.makePostRequest(apiUrl, headers, requestBody, List.class);
