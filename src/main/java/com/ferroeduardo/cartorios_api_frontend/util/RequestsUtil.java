@@ -2,10 +2,8 @@ package com.ferroeduardo.cartorios_api_frontend.util;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.ResponseEntity;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.*;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.Map;
@@ -35,6 +33,17 @@ public class RequestsUtil {
         HttpEntity<String> request = new HttpEntity<>(headers);
         ResponseEntity<T> responseEntity = restTemplate.exchange(requestUrl, HttpMethod.GET, request, responseType);
         return responseEntity;
+    }
+
+    public static HttpHeaders jsonTypeAuthenticated(String usernameHeaderName,
+                                                    String serviceUsername,
+                                                    String passwordHeaderName,
+                                                    String servicePassword) {
+        HttpHeaders headers = new HttpHeaders();
+        headers.set(usernameHeaderName, serviceUsername);
+        headers.set(passwordHeaderName, servicePassword);
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        return headers;
     }
 
 }

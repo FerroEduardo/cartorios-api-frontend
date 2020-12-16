@@ -1,13 +1,24 @@
 package com.ferroeduardo.cartorios_api_frontend.service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.ferroeduardo.cartorios_api_frontend.entity.User;
+import com.ferroeduardo.cartorios_api_frontend.entity.UserSafeData;
 import com.ferroeduardo.cartorios_api_frontend.exception.UserNotFoundException;
 import com.ferroeduardo.cartorios_api_frontend.repository.UserRepository;
+import com.ferroeduardo.cartorios_api_frontend.util.RequestsUtil;
+import com.ferroeduardo.cartorios_api_frontend.util.ServicesCommunicationUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.TreeMap;
 
 @Service
 public class UserService {
@@ -16,8 +27,11 @@ public class UserService {
 
     private UserRepository userRepository;
 
-    public UserService(UserRepository userRepository) {
+    private ServicesCommunicationUtil servicesCommunicationUtil;
+
+    public UserService(UserRepository userRepository, ServicesCommunicationUtil servicesCommunicationUtil) {
         this.userRepository = userRepository;
+        this.servicesCommunicationUtil = servicesCommunicationUtil;
         logger = LoggerFactory.getLogger(UserService.class);
     }
 
@@ -42,6 +56,54 @@ public class UserService {
             throw new NullPointerException("Ponteiro do usuário é null, não foi possivel salvar no banco de dados");
         }
         userRepository.save(user);
+    }
+
+    public List<UserSafeData> findUsersWithoutAccessToApi(Pageable pageable) {
+        List<UserSafeData> users = userRepository.findAllByApiAccessibleIsFalse(pageable);
+        return users;
+    }
+
+    public List<UserSafeData> findUsersWithAccessToApi(Pageable pageable) {
+        List<UserSafeData> users = userRepository.findAllByApiAccessibleIsTrue(pageable);
+        return users;
+    }
+
+    public void authorizeUserAccess(Long userId) throws UserNotFoundException, JsonProcessingException {
+        Optional<User> userOptional = userRepository.findById(userId);
+        User user = userOptional.orElseThrow(() -> new UserNotFoundException(userId));
+        user.setApiAccessible(true);
+        userRepository.save(user);
+        String requestUrl = "http://localhost:8080/api/key/authorize";
+        Map<String, Object> requestBodyMap = new TreeMap<>();
+        requestBodyMap.put("userId", userId);
+        HttpHeaders headers = RequestsUtil.jsonTypeAuthenticated(
+                servicesCommunicationUtil.usernameHeaderName, servicesCommunicationUtil.serviceUsername,
+                servicesCommunicationUtil.passwordHeaderName, servicesCommunicationUtil.servicePassword);
+        ResponseEntity<String> responseEntity = RequestsUtil.makePostRequest(requestUrl, headers, requestBodyMap, String.class);
+        if (responseEntity.getStatusCode() == HttpStatus.OK) {
+            logger.info("Usuário de ID:{} teve o acesso autorizado com sucesso", userId);
+        } else {
+            logger.info("Talvez o usuário de ID:{} não tenha tido o acesso autorizado. HttpStatus: {}", userId, responseEntity.getStatusCodeValue());
+        }
+    }
+
+    public void revokeUserAccess(Long userId) throws UserNotFoundException, JsonProcessingException {
+        Optional<User> userOptional = userRepository.findById(userId);
+        User user = userOptional.orElseThrow(() -> new UserNotFoundException(userId));
+        user.setApiAccessible(false);
+        userRepository.save(user);
+        String requestUrl = "http://localhost:8080/api/key/revoke";
+        Map<String, Object> requestBodyMap = new TreeMap<>();
+        requestBodyMap.put("userId", userId);
+        HttpHeaders headers = RequestsUtil.jsonTypeAuthenticated(
+                servicesCommunicationUtil.usernameHeaderName, servicesCommunicationUtil.serviceUsername,
+                servicesCommunicationUtil.passwordHeaderName, servicesCommunicationUtil.servicePassword);
+        ResponseEntity<String> responseEntity = RequestsUtil.makePostRequest(requestUrl, headers, requestBodyMap, String.class);
+        if (responseEntity.getStatusCode() == HttpStatus.OK) {
+            logger.info("Usuário de ID:{} teve o acesso revogado com sucesso", userId);
+        } else {
+            logger.info("Talvez o usuário de ID:{} não tenha tido o acesso revogado. HttpStatus: {}", userId, responseEntity.getStatusCodeValue());
+        }
     }
 
 }

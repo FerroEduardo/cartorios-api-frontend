@@ -24,7 +24,8 @@ import java.util.Objects;
 public class User implements UserDetails {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @SequenceGenerator(name = "cartorios_api_usuarios_id_seq", sequenceName = "cartorios_api_usuarios_id_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "cartorios_api_usuarios_id_seq")
     private Long id;
 
     @Column(name = "username", length = 60, unique = true)
