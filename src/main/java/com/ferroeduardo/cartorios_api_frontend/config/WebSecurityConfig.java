@@ -34,10 +34,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
             .authorizeRequests()
-                .antMatchers("/", "/signin/**", "/signup/**", "/css/**", "/api/cartorios")
+                .antMatchers("/", "/signin/**", "/signup/**", "/css/**", "/api/cartorios/**")
                     .permitAll()
                 .antMatchers("/api/access", "/api/how", "/api/key/generate", "/api/key/revoke")
                     .hasRole("USER")
+                .antMatchers("/api/admin/**", "/api/admin/panel/**")
+                    .hasRole("ADMIN")
+                .anyRequest()
+                    .denyAll()
                 .and()
             .formLogin()
                 .loginPage("/signin")
