@@ -20,7 +20,7 @@ import java.util.Objects;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "usuarios_cartorios_api")
+@Table(name = "cartorios_api_usuarios")
 public class User implements UserDetails {
 
     @Id
