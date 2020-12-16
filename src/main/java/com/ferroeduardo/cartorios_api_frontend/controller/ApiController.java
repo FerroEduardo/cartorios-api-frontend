@@ -68,10 +68,9 @@ public class ApiController {
         String requestUrl = "http://localhost:8080/api/key/get/";
         Map<String, Object> requestBodyMap = new TreeMap<>();
         requestBodyMap.put("userId", userId);
-        HttpHeaders headers = new HttpHeaders();
-        headers.set(servicesCommunicationUtil.usernameHeaderName, servicesCommunicationUtil.serviceUsername);
-        headers.set(servicesCommunicationUtil.passwordHeaderName, servicesCommunicationUtil.servicePassword);
-        headers.setContentType(MediaType.APPLICATION_JSON);
+        HttpHeaders headers = RequestsUtil.jsonTypeAuthenticated(
+                servicesCommunicationUtil.usernameHeaderName, servicesCommunicationUtil.serviceUsername,
+                servicesCommunicationUtil.passwordHeaderName, servicesCommunicationUtil.servicePassword);
         ResponseEntity<Map> responseEntity = RequestsUtil.makePostRequest(requestUrl, headers, requestBodyMap, Map.class);
         Map<String, String> responseObject = responseEntity.getBody();
         return responseObject;
@@ -87,10 +86,9 @@ public class ApiController {
         String requestUrl = "http://localhost:8080/api/key/generate/";
         Map<String, Object> requestBodyMap = new TreeMap<>();
         requestBodyMap.put("userId", userId);
-        HttpHeaders headers = new HttpHeaders();
-        headers.set(servicesCommunicationUtil.usernameHeaderName, servicesCommunicationUtil.serviceUsername);
-        headers.set(servicesCommunicationUtil.passwordHeaderName, servicesCommunicationUtil.servicePassword);
-        headers.setContentType(MediaType.APPLICATION_JSON);
+        HttpHeaders headers = RequestsUtil.jsonTypeAuthenticated(
+                servicesCommunicationUtil.usernameHeaderName, servicesCommunicationUtil.serviceUsername,
+                servicesCommunicationUtil.passwordHeaderName, servicesCommunicationUtil.servicePassword);
         ResponseEntity<Map> responseEntity = RequestsUtil.makePostRequest(requestUrl, headers, requestBodyMap, Map.class);
         Map<String, String> responseObject = responseEntity.getBody();
         logger.info(String.format("Usuário ID:'%d' requisitou uma nova API KEY", userId));
@@ -107,10 +105,9 @@ public class ApiController {
         String requestUrl = "http://localhost:8080/api/key/revoke/";
         Map<String, Object> requestBodyMap = new TreeMap<>();
         requestBodyMap.put("userId", userId);
-        HttpHeaders headers = new HttpHeaders();
-        headers.set(servicesCommunicationUtil.usernameHeaderName, servicesCommunicationUtil.serviceUsername);
-        headers.set(servicesCommunicationUtil.passwordHeaderName, servicesCommunicationUtil.servicePassword);
-        headers.setContentType(MediaType.APPLICATION_JSON);
+        HttpHeaders headers = RequestsUtil.jsonTypeAuthenticated(
+                servicesCommunicationUtil.usernameHeaderName, servicesCommunicationUtil.serviceUsername,
+                servicesCommunicationUtil.passwordHeaderName, servicesCommunicationUtil.servicePassword);
         ResponseEntity<Map> responseEntity = RequestsUtil.makePostRequest(requestUrl, headers, requestBodyMap, Map.class);
         if (responseEntity.getStatusCode() == HttpStatus.OK) {
             logger.info(String.format("Usuário ID:'%d' revogou a API KEY com sucesso", userId));

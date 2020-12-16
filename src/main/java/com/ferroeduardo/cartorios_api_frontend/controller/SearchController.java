@@ -43,10 +43,9 @@ public class SearchController {
     public ResponseEntity<?> getCartorios(@RequestBody Map<String, Object> requestBody, @RequestParam(name = "page", required = true) int page) throws JsonProcessingException {
         ObjectMapper objectMapper = new ObjectMapper();
         String apiUrl = "http://localhost:8080/api/frontend/cartorios/?page="+page+"&cartoriosTableRows="+cartoriosTableRows;
-        HttpHeaders headers = new HttpHeaders();
-        headers.set(servicesCommunicationUtil.usernameHeaderName, servicesCommunicationUtil.serviceUsername);
-        headers.set(servicesCommunicationUtil.passwordHeaderName, servicesCommunicationUtil.servicePassword);
-        headers.setContentType(MediaType.APPLICATION_JSON);
+        HttpHeaders headers = RequestsUtil.jsonTypeAuthenticated(
+                servicesCommunicationUtil.usernameHeaderName, servicesCommunicationUtil.serviceUsername,
+                servicesCommunicationUtil.passwordHeaderName, servicesCommunicationUtil.servicePassword);
         logger.info("Frontend requisitou a lista de cartórios");
         ResponseEntity<List> responseEntity = RequestsUtil.makePostRequest(apiUrl, headers, requestBody, List.class);
         List<Map<String, Object>> responseObject = responseEntity.getBody();
