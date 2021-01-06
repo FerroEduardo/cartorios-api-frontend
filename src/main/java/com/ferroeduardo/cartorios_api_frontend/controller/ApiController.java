@@ -53,7 +53,7 @@ public class ApiController {
 
     @GetMapping(path = "/how")
     public String howAccessApi(Model model, Principal principal) {
-        return "/api/how";
+        return "redirect:http://localhost:8080/documentation/swagger-ui/";
     }
 
     @GetMapping(path = "/key/get", produces = "application/json")
