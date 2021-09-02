@@ -70,8 +70,20 @@ public class UserService {
     }
 
     @Transactional(readOnly = true)
+    public List<UserDTO> findUsersWithoutAccessToApi(Pageable pageable, long currentUserId) {
+        List<UserDTO> users = userRepository.findAllByApiAccessibleIsFalse(pageable);
+        return users;
+    }
+
+    @Transactional(readOnly = true)
     public List<UserDTO> findUsersWithAccessToApi(Pageable pageable) {
         List<UserDTO> users = userRepository.findAllByApiAccessibleIsTrue(pageable);
+        return users;
+    }
+
+    @Transactional(readOnly = true)
+    public List<UserDTO> findUsersWithAccessToApi(Pageable pageable, long currentUserId) {
+        List<UserDTO> users = userRepository.findAllByApiAccessibleIsTrueAndIdNot(pageable, currentUserId);
         return users;
     }
 
