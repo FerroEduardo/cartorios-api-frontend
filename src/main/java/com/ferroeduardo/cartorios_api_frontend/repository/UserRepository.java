@@ -18,8 +18,12 @@ public interface UserRepository extends PagingAndSortingRepository<User, Long> {
 
     List<UserDTO> findAllByApiAccessibleIsFalse(Pageable pageable);
 
+    List<UserDTO> findAllByApiAccessibleIsFalseAndIdNot(Pageable pageable, long id);
+
     List<UserDTO> findAllByApiAccessibleIsTrue();
 
     List<UserDTO> findAllByApiAccessibleIsTrue(Pageable pageable);
+
+    List<UserDTO> findAllByApiAccessibleIsTrueAndIdNot(Pageable pageable, long id);
 
 }
