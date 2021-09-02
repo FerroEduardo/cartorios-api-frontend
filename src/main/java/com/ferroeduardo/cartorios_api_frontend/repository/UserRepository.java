@@ -1,7 +1,7 @@
 package com.ferroeduardo.cartorios_api_frontend.repository;
 
 import com.ferroeduardo.cartorios_api_frontend.entity.User;
-import com.ferroeduardo.cartorios_api_frontend.entity.UserSafeData;
+import com.ferroeduardo.cartorios_api_frontend.entity.UserDTO;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.PagingAndSortingRepository;
 
@@ -14,12 +14,12 @@ public interface UserRepository extends PagingAndSortingRepository<User, Long> {
 
     Optional<User> findFirstByEmail(String email);
 
-    List<UserSafeData> findAllByApiAccessibleIsFalse();
+    List<UserDTO> findAllByApiAccessibleIsFalse();
 
-    List<UserSafeData> findAllByApiAccessibleIsFalse(Pageable pageable);
+    List<UserDTO> findAllByApiAccessibleIsFalse(Pageable pageable);
 
-    List<UserSafeData> findAllByApiAccessibleIsTrue();
+    List<UserDTO> findAllByApiAccessibleIsTrue();
 
-    List<UserSafeData> findAllByApiAccessibleIsTrue(Pageable pageable);
+    List<UserDTO> findAllByApiAccessibleIsTrue(Pageable pageable);
 
 }

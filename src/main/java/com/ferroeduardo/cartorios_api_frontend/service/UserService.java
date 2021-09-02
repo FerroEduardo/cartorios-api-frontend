@@ -2,7 +2,7 @@ package com.ferroeduardo.cartorios_api_frontend.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.ferroeduardo.cartorios_api_frontend.entity.User;
-import com.ferroeduardo.cartorios_api_frontend.entity.UserSafeData;
+import com.ferroeduardo.cartorios_api_frontend.entity.UserDTO;
 import com.ferroeduardo.cartorios_api_frontend.exception.UserNotFoundException;
 import com.ferroeduardo.cartorios_api_frontend.repository.UserRepository;
 import com.ferroeduardo.cartorios_api_frontend.util.RequestsUtil;
@@ -64,14 +64,14 @@ public class UserService {
     }
 
     @Transactional(readOnly = true)
-    public List<UserSafeData> findUsersWithoutAccessToApi(Pageable pageable) {
-        List<UserSafeData> users = userRepository.findAllByApiAccessibleIsFalse(pageable);
+    public List<UserDTO> findUsersWithoutAccessToApi(Pageable pageable) {
+        List<UserDTO> users = userRepository.findAllByApiAccessibleIsFalse(pageable);
         return users;
     }
 
     @Transactional(readOnly = true)
-    public List<UserSafeData> findUsersWithAccessToApi(Pageable pageable) {
-        List<UserSafeData> users = userRepository.findAllByApiAccessibleIsTrue(pageable);
+    public List<UserDTO> findUsersWithAccessToApi(Pageable pageable) {
+        List<UserDTO> users = userRepository.findAllByApiAccessibleIsTrue(pageable);
         return users;
     }
 

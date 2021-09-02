@@ -2,7 +2,7 @@ package com.ferroeduardo.cartorios_api_frontend.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.ferroeduardo.cartorios_api_frontend.entity.User;
-import com.ferroeduardo.cartorios_api_frontend.entity.UserSafeData;
+import com.ferroeduardo.cartorios_api_frontend.entity.UserDTO;
 import com.ferroeduardo.cartorios_api_frontend.service.UserService;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -75,7 +75,7 @@ public class AdminController {
     public ResponseEntity<?> usersWithoutAccessToApi(@RequestBody(required = true) Map<String, String> requestMap) {
         int page = Integer.parseInt(requestMap.get("page"));
         Pageable pageRequest = PageRequest.of(page, usersPageSize);
-        List<UserSafeData> users = userService.findUsersWithoutAccessToApi(pageRequest);
+        List<UserDTO> users = userService.findUsersWithoutAccessToApi(pageRequest);
         return ResponseEntity.ok().body(users);
     }
 
@@ -83,7 +83,7 @@ public class AdminController {
     public ResponseEntity<?> usersWithAccessToApi(@RequestBody(required = true) Map<String, String> requestMap) {
         int page = Integer.parseInt(requestMap.get("page"));
         Pageable pageRequest = PageRequest.of(page, usersPageSize);
-        List<UserSafeData> users = userService.findUsersWithAccessToApi(pageRequest);
+        List<UserDTO> users = userService.findUsersWithAccessToApi(pageRequest);
         return ResponseEntity.ok().body(users);
     }
 }

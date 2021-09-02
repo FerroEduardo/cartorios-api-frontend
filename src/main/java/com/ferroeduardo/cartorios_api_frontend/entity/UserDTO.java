@@ -1,6 +1,6 @@
 package com.ferroeduardo.cartorios_api_frontend.entity;
 
-public interface UserSafeData {
+public interface UserDTO {
 
     Long getId();
     String getUsername();
