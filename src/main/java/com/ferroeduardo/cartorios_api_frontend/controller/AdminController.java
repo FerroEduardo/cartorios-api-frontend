@@ -40,9 +40,7 @@ public class AdminController {
         User user = userService.findByUsername(principal.getName());
         Pageable firstPage = PageRequest.of(0, usersPageSize);
         model.addAttribute("apiAccessible", user.isApiAccessible());
-        List<UserDTO> usersWithoutAccessToApi = userService.findUsersWithoutAccessToApi(firstPage);
-        usersWithoutAccessToApi.removeIf(userDTO -> userDTO.getId().equals(user.getId()));
-        model.addAttribute("usersWithoutAccessToApi", usersWithoutAccessToApi);
+        model.addAttribute("usersWithoutAccessToApi", userService.findUsersWithoutAccessToApi(firstPage, user.getId()));
         model.addAttribute("queryPath", "userswithoutaccesstoapi");
         model.addAttribute("usersPageSize", usersPageSize);
         return "/admin/authorize";
@@ -60,9 +58,7 @@ public class AdminController {
         User user = userService.findByUsername(principal.getName());
         Pageable firstPage = PageRequest.of(0, usersPageSize);
         model.addAttribute("apiAccessible", user.isApiAccessible());
-        List<UserDTO> usersWithAccessToApi = userService.findUsersWithAccessToApi(firstPage);
-        usersWithAccessToApi.removeIf(userDTO -> userDTO.getId().equals(user.getId()));
-        model.addAttribute("usersWithAccessToApi", usersWithAccessToApi);
+        model.addAttribute("usersWithAccessToApi", userService.findUsersWithAccessToApi(firstPage, user.getId()));
         model.addAttribute("queryPath", "userswithaccesstoapi");
         model.addAttribute("usersPageSize", usersPageSize);
         return "/admin/revoke";
@@ -76,18 +72,20 @@ public class AdminController {
     }
 
     @PostMapping(path = "/userswithoutaccesstoapi", produces = "application/json")
-    public ResponseEntity<?> usersWithoutAccessToApi(@RequestBody(required = true) Map<String, String> requestMap) {
+    public ResponseEntity<?> usersWithoutAccessToApi(@RequestBody(required = true) Map<String, String> requestMap, Principal principal) {
+        User user = userService.findByUsername(principal.getName());
         int page = Integer.parseInt(requestMap.get("page"));
         Pageable pageRequest = PageRequest.of(page, usersPageSize);
-        List<UserDTO> users = userService.findUsersWithoutAccessToApi(pageRequest);
+        List<UserDTO> users = userService.findUsersWithoutAccessToApi(pageRequest, user.getId());
         return ResponseEntity.ok().body(users);
     }
 
     @PostMapping(path = "/userswithaccesstoapi", produces = "application/json")
-    public ResponseEntity<?> usersWithAccessToApi(@RequestBody(required = true) Map<String, String> requestMap) {
+    public ResponseEntity<?> usersWithAccessToApi(@RequestBody(required = true) Map<String, String> requestMap, Principal principal) {
+        User user = userService.findByUsername(principal.getName());
         int page = Integer.parseInt(requestMap.get("page"));
         Pageable pageRequest = PageRequest.of(page, usersPageSize);
-        List<UserDTO> users = userService.findUsersWithAccessToApi(pageRequest);
+        List<UserDTO> users = userService.findUsersWithAccessToApi(pageRequest, user.getId());
         return ResponseEntity.ok().body(users);
     }
 }

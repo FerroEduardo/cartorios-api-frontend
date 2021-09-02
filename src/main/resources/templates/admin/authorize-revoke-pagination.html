@@ -21,7 +21,6 @@
     <script th:inline="javascript" type="application/javascript">
         let pageInput = $("#page-number");
         const usersPage = [[${usersPageSize}]];
-        const adminUsername = /*[[${#authentication.getPrincipal().getUsername()}]]*/ 'missing-admin-username'
 
         async function queryData(url) {
             fetch(url, {
@@ -35,7 +34,6 @@
                 },
             }).then(function (response) {
                 response.json().then(function (data) {
-                    console.log(data);
                     data.forEach(function (user) {
                         appendUser(user.username, user.id);
                     })
@@ -97,7 +95,7 @@
             [# th:if="${queryPath == 'userswithoutaccesstoapi'}"]
             // authorize
             let template =
-                `<div class="card text-center text-white user-card ${username === adminUsername ? 'bg-info' : 'bg-dark'}">
+                `<div class="card text-center text-white user-card bg-dark">
                         <div class="card-header">
                             ${username}
                         </div>
@@ -114,7 +112,7 @@
             [# th:unless="${queryPath == 'userswithoutaccesstoapi'}"]
             // revoke
             let template =
-                `<div class="card text-center text-white user-card ${username === adminUsername ? 'bg-info' : 'bg-dark'}">
+                `<div class="card text-center text-white user-card bg-dark">
                         <div class="card-header">
                             ${username}
                         </div>
