@@ -40,7 +40,9 @@ public class AdminController {
         User user = userService.findByUsername(principal.getName());
         Pageable firstPage = PageRequest.of(0, usersPageSize);
         model.addAttribute("apiAccessible", user.isApiAccessible());
-        model.addAttribute("usersWithoutAccessToApi", userService.findUsersWithoutAccessToApi(firstPage));
+        List<UserDTO> usersWithoutAccessToApi = userService.findUsersWithoutAccessToApi(firstPage);
+        usersWithoutAccessToApi.removeIf(userDTO -> userDTO.getId().equals(user.getId()));
+        model.addAttribute("usersWithoutAccessToApi", usersWithoutAccessToApi);
         model.addAttribute("queryPath", "userswithoutaccesstoapi");
         model.addAttribute("usersPageSize", usersPageSize);
         return "/admin/authorize";
@@ -58,7 +60,9 @@ public class AdminController {
         User user = userService.findByUsername(principal.getName());
         Pageable firstPage = PageRequest.of(0, usersPageSize);
         model.addAttribute("apiAccessible", user.isApiAccessible());
-        model.addAttribute("usersWithAccessToApi", userService.findUsersWithAccessToApi(firstPage));
+        List<UserDTO> usersWithAccessToApi = userService.findUsersWithAccessToApi(firstPage);
+        usersWithAccessToApi.removeIf(userDTO -> userDTO.getId().equals(user.getId()));
+        model.addAttribute("usersWithAccessToApi", usersWithAccessToApi);
         model.addAttribute("queryPath", "userswithaccesstoapi");
         model.addAttribute("usersPageSize", usersPageSize);
         return "/admin/revoke";

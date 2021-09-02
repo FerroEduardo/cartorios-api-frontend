@@ -21,7 +21,7 @@
         <div th:if="${usersWithAccessToApi.size() != 0}" th:remove="tag">
             <div id="user-list">
                 <div th:each="user : ${usersWithAccessToApi}" th:remove="tag">
-                    <div class="card text-center text-white user-card" th:classappend="${#authentication.getPrincipal().getUsername()==user.getUsername()} ? 'bg-info' : 'bg-dark'">
+                    <div class="card text-center text-white user-card bg-dark">
                         <div class="card-header">
                             <span th:text="${user.getUsername()}" th:remove="tag">username</span>
                         </div>
